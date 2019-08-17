@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".TabActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <Button
+                        android:id="@+id/tab_drawer_button"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@drawable/tab_drawer_button"
+                        android:layout_marginEnd="5dp"
+                        android:padding="4dp"
+                        android:textSize="14sp"
+                        android:minWidth="28dp"
+                        android:minHeight="0dp"
+                        android:textColor="@color/toolBarTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <AutoCompleteTextView
+                        android:id="@+id/address_bar"
+                        android:padding="6dp"
+                        android:textSize="16sp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@android:color/black"
+                        android:background="@drawable/address_bar_background"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                </AutoCompleteTextView>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+                android:fitsSystemWindows="true"
+                android:id="@+id/frame_layout"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+            android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:background="@android:color/white"
+                    android:scrollbars="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/drawer_bottom_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+            <LinearLayout
+                    android:id="@+id/drawer_bottom_bar"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                <ImageButton
+                        android:id="@+id/drawer_back_button"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_arrow_back_black_24dp"
+                        android:padding="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ImageButton
+                        android:id="@+id/drawer_home_button"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_home_black_24dp"
+                        android:padding="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ImageButton
+                        android:id="@+id/drawer_forward_button"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_arrow_forward_black_24dp"
+                        android:padding="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ImageButton
+                        android:id="@+id/drawer_add_tab_button"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:padding="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
