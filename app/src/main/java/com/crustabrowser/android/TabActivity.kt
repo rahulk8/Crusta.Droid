@@ -12,19 +12,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.crustabrowser.android.history.History
+import com.crustabrowser.android.bookmarks.BookmarkActivity
 import com.crustabrowser.android.history.HistoryActivity
+import com.crustabrowser.android.tabs.Tab
+import com.crustabrowser.android.tabs.TabInfo
+import com.crustabrowser.android.tabs.TabListActivity
 import kotlinx.android.synthetic.main.activity_tab.*
 
-class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
-    var tabInfo = TabInfo()
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var viewAdapter: TabAdapter
+class TabActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,52 +29,25 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        drawer_layout.addDrawerListener(this)
-        tab_drawer_button.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
+
         address_bar.setOnFocusChangeListener { view, _ ->
             run {
                 if (!view.hasFocus()) hideKeyboard(view)
             }
         }
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = TabAdapter(tabInfo)
-        viewAdapter.onIndexChangeRequested = { index -> onIndexChangeRequested(index) }
-        viewAdapter.closeTab = { index -> closeTab(index) }
-
-        recyclerView = recycler_view.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
-
-        drawer_back_button.setOnClickListener {
-            tabInfo.currentWebView().goBack()
-            drawer_layout.closeDrawer(GravityCompat.START)
-        }
-
-        drawer_forward_button.setOnClickListener {
-            tabInfo.currentWebView().goForward()
-            drawer_layout.closeDrawer(GravityCompat.START)
-        }
-
-        drawer_add_tab_button.setOnClickListener {
-            addTab()
-            drawer_layout.closeDrawer(GravityCompat.START)
+        tab_list_button.setOnClickListener {
+            val intent = Intent(this, TabListActivity::class.java)
+            startActivity(intent)
         }
 
         addTab()
     }
 
-    private fun addTab() {
-        val tab = Tab(this)
-        setupTab(tab)
+    override fun onResume() {
+        super.onResume()
 
-        changeTab(tab)
-    }
-
-    private fun setupTab(tab: Tab) {
-        tabInfo.addTab(tab)
+        refreshTabs()
     }
 
     private fun hideKeyboard(view: View) {
@@ -88,48 +56,30 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
     }
 
     private fun reloadCurrentTab() {
-        val webView = tabInfo.currentWebView()
+        val webView = TabInfo.currentWebView()
         webView.reload()
     }
 
-    private fun onIndexChangeRequested(index: Int) {
-        tabInfo.currentIndex = index
+    private fun addTab() {
+        val tab = Tab(this)
+        TabInfo.addTab(tab)
 
-        val tab = tabInfo.tabs[index]
-        changeTab(tab)
-
-        drawer_layout.closeDrawer(GravityCompat.START)
+        refreshTabs()
     }
 
-    private fun changeTab(tab: Tab) {
-        for (t in tabInfo.tabs) t.isCurrent = false
-        tab.isCurrent = true
-
-        frame_layout.removeAllViews()
-        frame_layout.addView(tab)
-
-        tab_drawer_button.text = tabInfo.count().toString()
-    }
-
-    private fun closeTab(index: Int) {
-        tabInfo.tabs.removeAt(index)
-        tabInfo.currentIndex--
-
-        if (tabInfo.count() == 0) {
+    private fun refreshTabs() {
+        if (TabInfo.currentIndex == -1) {
             addTab()
-            return
-        }
+        } else {
+            val tab = TabInfo.currentTab()
 
-        if (tabInfo.currentIndex < 0) {
-            tabInfo.currentIndex = 0
+            frame_layout.removeAllViews()
+            frame_layout.addView(tab)
         }
-
-        val tab = tabInfo.tabs[tabInfo.currentIndex]
-        changeTab(tab)
     }
 
     override fun onBackPressed() {
-        val webView = tabInfo.currentWebView()
+        val webView = TabInfo.currentWebView()
         if (webView.canGoBack()) webView.goBack()
         else super.onBackPressed()
     }
@@ -147,6 +97,11 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
             }
             R.id.open_new_tab -> {
                 addTab()
+                return true
+            }
+            R.id.show_bookmarks -> {
+                val intent = Intent(this, BookmarkActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.show_history -> {
@@ -173,18 +128,4 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
         return super.dispatchTouchEvent(ev)
     }
-
-    override fun onDrawerStateChanged(newState: Int) {
-        viewAdapter.notifyDataSetChanged()
-    }
-
-    override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-    }
-
-    override fun onDrawerClosed(drawerView: View) {
-    }
-
-    override fun onDrawerOpened(drawerView: View) {
-    }
-
 }

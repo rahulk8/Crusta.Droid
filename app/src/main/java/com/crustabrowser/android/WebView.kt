@@ -16,6 +16,6 @@ class WebView @JvmOverloads constructor(
 
         settings.javaScriptEnabled = true
 
-        loadUrl("http://github.com")
+        loadUrl("https://google.com")
     }
 }

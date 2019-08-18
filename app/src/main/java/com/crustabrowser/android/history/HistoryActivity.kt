@@ -1,11 +1,8 @@
 package com.crustabrowser.android.history
 
-import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +27,7 @@ class HistoryActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = HistoryAdapter()
-        recycler_view.apply {
+        tab_recycler_view.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }

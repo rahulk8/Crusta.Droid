@@ -10,8 +10,10 @@
     <item android:id="@+id/open_new_tab"
           android:title="New Tab" />
     <item android:title="New Incognito Tab" />
-    <item android:title="Bookmark Tab" />
-    <item android:title="Bookmarks" />
+    <item android:id="@+id/add_bookmark"
+          android:title="Add Bookmark" />
+    <item android:id="@+id/show_bookmarks"
+          android:title="Bookmarks" />
     <item android:id="@+id/show_history"
           android:title="History" />
     <item android:title="Downloads" />
