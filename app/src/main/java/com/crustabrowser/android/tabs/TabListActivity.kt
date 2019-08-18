@@ -2,6 +2,7 @@ package com.crustabrowser.android.tabs
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crustabrowser.android.R
@@ -27,9 +28,19 @@ class TabListActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.tab_list_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                finish()
+                return true
+            }
+            R.id.add_tab -> {
+                TabInfo.activity.addTab()
                 finish()
                 return true
             }

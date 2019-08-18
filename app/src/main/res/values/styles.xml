@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:textColorSecondary">@color/toolBarTextColor</item>
-        <item name="android:iconTint" tools:ignore="NewApi">@color/toolBarTextColor</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 

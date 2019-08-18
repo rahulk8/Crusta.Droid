@@ -13,11 +13,18 @@
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

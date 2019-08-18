@@ -1,29 +1,20 @@
-package com.crustabrowser.android.bookmarks
+package com.crustabrowser.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.crustabrowser.android.R
-import kotlinx.android.synthetic.main.activity_bookmark.*
+import kotlinx.android.synthetic.main.activity_about.*
 
-class BookmarkActivity : AppCompatActivity() {
+class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bookmark)
+        setContentView(R.layout.activity_about)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Bookmarks"
+        supportActionBar?.title = "About Crusta"
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val linearLayoutManager = LinearLayoutManager(this)
-        val viewAdapter = BookmarkAdapter()
-        recycler_view.apply {
-            layoutManager = linearLayoutManager
-            adapter = viewAdapter
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

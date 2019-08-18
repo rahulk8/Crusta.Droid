@@ -3,6 +3,7 @@ package com.crustabrowser.android
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,8 +11,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
+import com.crustabrowser.android.bookmarks.Bookmark
 import com.crustabrowser.android.bookmarks.BookmarkActivity
 import com.crustabrowser.android.history.HistoryActivity
 import com.crustabrowser.android.tabs.Tab
@@ -21,25 +23,18 @@ import kotlinx.android.synthetic.main.activity_tab.*
 
 class TabActivity : AppCompatActivity() {
 
+    var forwardButton: MenuItem? = null
+    var countButton: MenuItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Database.initDb(this)
+        TabInfo.activity = this
 
         setContentView(R.layout.activity_tab)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        address_bar.setOnFocusChangeListener { view, _ ->
-            run {
-                if (!view.hasFocus()) hideKeyboard(view)
-            }
-        }
-
-        tab_list_button.setOnClickListener {
-            val intent = Intent(this, TabListActivity::class.java)
-            startActivity(intent)
-        }
 
         addTab()
     }
@@ -60,7 +55,7 @@ class TabActivity : AppCompatActivity() {
         webView.reload()
     }
 
-    private fun addTab() {
+    fun addTab() {
         val tab = Tab(this)
         TabInfo.addTab(tab)
 
@@ -75,12 +70,29 @@ class TabActivity : AppCompatActivity() {
 
             frame_layout.removeAllViews()
             frame_layout.addView(tab)
+
+            countButton?.title = TabInfo.count().toString()
+
+            refreshForwardButton()
+        }
+    }
+
+    private fun refreshForwardButton() {
+        if (TabInfo.currentWebView().canGoForward()) {
+            forwardButton?.isEnabled = true
+            forwardButton?.icon?.alpha = 255
+        } else {
+            forwardButton?.isEnabled = false
+            forwardButton?.icon?.alpha = 25
         }
     }
 
     override fun onBackPressed() {
         val webView = TabInfo.currentWebView()
-        if (webView.canGoBack()) webView.goBack()
+        if (webView.canGoBack()) {
+            webView.goBack()
+            refreshForwardButton()
+        }
         else super.onBackPressed()
     }
 
@@ -89,15 +101,42 @@ class TabActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        forwardButton = menu?.findItem(R.id.forward_button)
+        refreshForwardButton()
+
+        countButton = menu?.findItem(R.id.tab_list_button)
+        countButton?.title = TabInfo.count().toString()
+        countButton?.actionView?.setBackgroundResource(R.drawable.tab_list_button)
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.forward_button -> {
+                TabInfo.currentWebView().goForward()
+                refreshForwardButton()
+            }
             R.id.reload_button -> {
                 reloadCurrentTab()
+                return true
+            }
+            R.id.tab_list_button -> {
+                val intent = Intent(this, TabListActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.open_new_tab -> {
                 addTab()
                 return true
+            }
+            R.id.add_bookmark -> {
+                val webView = TabInfo.currentWebView()
+                val bookmark = Bookmark(webView.title, webView.url)
+                AsyncTask.execute {
+                    Database.db?.bookmarkDao()?.insert(bookmark)
+                }
             }
             R.id.show_bookmarks -> {
                 val intent = Intent(this, BookmarkActivity::class.java)
@@ -108,6 +147,10 @@ class TabActivity : AppCompatActivity() {
                 val intent = Intent(this, HistoryActivity::class.java)
                 startActivity(intent)
                 return true
+            }
+            R.id.about_item -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
             }
         }
 

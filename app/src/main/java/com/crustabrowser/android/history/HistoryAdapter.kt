@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crustabrowser.android.Database
 import com.crustabrowser.android.R
-import kotlinx.android.synthetic.main.view_history_adapter.view.*
+import kotlinx.android.synthetic.main.view_sites_adapter.view.*
 import java.util.*
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -25,7 +25,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_history_adapter, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_sites_adapter, parent, false)
         return ViewHolder(view)
     }
 
@@ -35,7 +35,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
         val item = items[position]
         holder.view.title.text = item.title
         holder.view.address.text = item.address
-        holder.view.time.text = Date(item.time).toLocaleString()
+        holder.view.extra_info.text = Date(item.time).toLocaleString()
 
         holder.view.remove.setOnClickListener {
             val index = holder.adapterPosition
