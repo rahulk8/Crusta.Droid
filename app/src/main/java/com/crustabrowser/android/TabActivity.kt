@@ -1,6 +1,7 @@
 package com.crustabrowser.android
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
@@ -14,6 +15,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.crustabrowser.android.history.History
+import com.crustabrowser.android.history.HistoryActivity
 import kotlinx.android.synthetic.main.activity_tab.*
 
 class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
@@ -25,15 +28,14 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tab)
+        Database.initDb(this)
 
-        drawer_layout.addDrawerListener(this)
+        setContentView(R.layout.activity_tab)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
+        drawer_layout.addDrawerListener(this)
         tab_drawer_button.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
-
         address_bar.setOnFocusChangeListener { view, _ ->
             run {
                 if (!view.hasFocus()) hideKeyboard(view)
@@ -139,8 +141,19 @@ class TabActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.reload_button -> reloadCurrentTab()
-            R.id.open_new_tab -> addTab()
+            R.id.reload_button -> {
+                reloadCurrentTab()
+                return true
+            }
+            R.id.open_new_tab -> {
+                addTab()
+                return true
+            }
+            R.id.show_history -> {
+                val intent = Intent(this, HistoryActivity::class.java)
+                startActivity(intent)
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)

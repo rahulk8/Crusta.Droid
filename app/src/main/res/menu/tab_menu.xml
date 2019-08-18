@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-            android:id="@+id/reload_button"
-            android:orderInCategory="2"
-            app:showAsAction="always"
-            android:title="Reload Page"
-            app:iconTint="@color/toolBarTextColor"
-            android:icon="@drawable/ic_refresh_black_24dp" />
+    <item android:id="@+id/reload_button"
+          android:orderInCategory="2"
+          app:showAsAction="always"
+          android:title="Reload Page"
+          app:iconTint="@color/toolBarTextColor"
+          android:icon="@drawable/ic_refresh_black_24dp" />
 
     <item android:id="@+id/open_new_tab"
           android:title="New Tab" />
     <item android:title="New Incognito Tab" />
     <item android:title="Bookmark Tab" />
     <item android:title="Bookmarks" />
-    <item android:title="History" />
+    <item android:id="@+id/show_history"
+          android:title="History" />
     <item android:title="Downloads" />
     <item android:title="Settings" />
     <item android:title="Help &amp; Feedback" />

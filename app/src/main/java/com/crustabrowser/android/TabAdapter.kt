@@ -32,8 +32,8 @@ class TabAdapter(private var tabInfo: TabInfo) : RecyclerView.Adapter<TabAdapter
 
         holder.view.setOnClickListener { onIndexChangeRequested?.invoke(position) }
         holder.view.close_button.setOnClickListener {
-            closeTab?.invoke(position)
-            notifyDataSetChanged()
+            closeTab?.invoke(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
         }
     }
 
