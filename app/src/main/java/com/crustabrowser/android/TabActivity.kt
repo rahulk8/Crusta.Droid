@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
@@ -20,6 +21,7 @@ import com.crustabrowser.android.tabs.Tab
 import com.crustabrowser.android.tabs.TabInfo
 import com.crustabrowser.android.tabs.TabListActivity
 import kotlinx.android.synthetic.main.activity_tab.*
+import kotlinx.android.synthetic.main.view_tab_adapter.*
 
 class TabActivity : AppCompatActivity() {
 
@@ -35,6 +37,23 @@ class TabActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        address_bar.setOnFocusChangeListener { view, b -> run {
+            if (!view.hasFocus()) {
+                hideKeyboard(view)
+            }
+        }}
+
+        address_bar.setOnEditorActionListener { view, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                view.clearFocus()
+                val query = view.text.toString()
+                TabInfo.currentWebView().search(query)
+                true
+            } else {
+                false
+            }
+        }
 
         addTab()
     }

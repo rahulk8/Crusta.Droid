@@ -16,7 +16,22 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways|snap" />
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            <AutoCompleteTextView
+                    android:id="@+id/address_bar"
+                    android:textSize="14dp"
+                    android:hint="Search or type URL"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:lines="1"
+                    android:inputType="textUri"
+                    android:imeOptions="actionSearch"
+                    android:background="@drawable/address_bar_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
