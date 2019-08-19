@@ -15,7 +15,60 @@
   -->
 
 <androidx.preference.PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+            app:title="Browser">
+
+        <ListPreference
+                app:key="search_engine"
+                app:title="Search Engine"
+                app:entries="@array/search_engine_entries"
+                app:entryValues="@array/search_engine_values"
+                app:defaultValue="ecosia"
+                app:summary="%s" />
+
+        <EditTextPreference
+            app:key="homepage"
+            app:title="Home Page"
+            app:defaultValue="http://google.com"
+            app:useSimpleSummaryProvider="true"
+            app:summary="%s" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Privacy">
+
+        <SwitchPreferenceCompat
+                app:key="location"
+                app:title="Location Access"
+                app:defaultValue="true"/>
+
+        <SwitchPreferenceCompat
+                app:key="cookies"
+                app:title="Accept Cookies"
+                app:defaultValue="true"/>
+
+        <SwitchPreferenceCompat
+                app:key="formdata"
+                app:title="Save Form Data"
+                app:defaultValue="true"/>
+
+        <SwitchPreferenceCompat
+                app:key="dnt"
+                app:title="Request 'Do Not Track'"
+                app:defaultValue="true"/>
+
+        <EditTextPreference
+                app:key="useragent"
+                app:title="User Agent"
+                app:defaultValue="Crusta/2.0"
+                app:useSimpleSummaryProvider="true"
+                app:summary="%s" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
             app:title="WebView">
@@ -28,6 +81,11 @@
         <SwitchPreferenceCompat
                 app:key="load_image"
                 app:title="Load Images"
+                app:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+                app:key="viewport"
+                app:title="Use Wide Viewport"
                 app:defaultValue="true" />
 
     </PreferenceCategory>
