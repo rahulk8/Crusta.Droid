@@ -167,6 +167,10 @@ class TabActivity : AppCompatActivity() {
                 startActivity(intent)
                 return true
             }
+            R.id.settings_item -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+            }
             R.id.about_item -> {
                 val intent = Intent(this, AboutActivity::class.java)
                 startActivity(intent)

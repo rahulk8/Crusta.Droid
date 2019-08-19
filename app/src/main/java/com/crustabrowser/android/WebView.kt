@@ -1,8 +1,10 @@
 package com.crustabrowser.android
 
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
@@ -13,6 +15,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 
 class WebView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -25,7 +28,7 @@ class WebView @JvmOverloads constructor(
         webViewClient = WebViewClient()
         webChromeClient = WebChromeClient()
 
-        settings.javaScriptEnabled = true
+        initSettings()
         
         setDownloadListener { url, userAgent, contentDisposition, mimeType, contentLength ->
             if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -61,5 +64,14 @@ class WebView @JvmOverloads constructor(
 
     fun search(query: String) {
 
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun initSettings() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        settings.apply {
+            javaScriptEnabled = preferences.getBoolean("javascript", true)
+            blockNetworkImage = !preferences.getBoolean("load_image", true)
+        }
     }
 }

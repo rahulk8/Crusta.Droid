@@ -24,7 +24,8 @@
     <item android:id="@+id/show_history"
           android:title="History" />
     <item android:title="Downloads" />
-    <item android:title="Settings" />
+    <item android:id="@+id/settings_item"
+          android:title="Settings" />
     <item android:id="@+id/about_item"
           android:title="About" />
 </menu>
