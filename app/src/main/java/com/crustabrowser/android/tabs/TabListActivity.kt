@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crustabrowser.android.R
 import kotlinx.android.synthetic.main.activity_tab_list.*
@@ -42,6 +43,18 @@ class TabListActivity : AppCompatActivity() {
             R.id.add_tab -> {
                 TabInfo.activity.addTab()
                 finish()
+                return true
+            }
+            R.id.close_all -> {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Close all tabs")
+                builder.setPositiveButton("Yes") { _, _ ->
+                    TabInfo.removeAllTabs()
+                    finish()
+                }
+                builder.setNegativeButton("No") { _, _ -> }
+                val dialog = builder.create()
+                dialog.show()
                 return true
             }
         }

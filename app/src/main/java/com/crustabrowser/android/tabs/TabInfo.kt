@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.view_tab.view.*
 object TabInfo {
     var normalTabs = mutableListOf<Tab>()
     var incognitoTabs = mutableListOf<Tab>()
-    var currentIndex = 0
+    var currentIndex = -1
 
     var mode = BrowserMode.Normal
 
@@ -33,6 +33,14 @@ object TabInfo {
             normalTabs.removeAt(index)
             currentIndex--
             if (currentIndex < 0) currentIndex = normalTabs.size - 1
+        }
+    }
+
+    fun removeAllTabs() {
+        if (mode == BrowserMode.Normal) {
+            for (tab in normalTabs) tab.web_view.destroy()
+            normalTabs.clear()
+            currentIndex = -1
         }
     }
 
