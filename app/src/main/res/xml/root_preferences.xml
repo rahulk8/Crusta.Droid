@@ -62,6 +62,11 @@
                 app:defaultValue="true"/>
 
         <SwitchPreferenceCompat
+                app:key="3rd_party_cookies"
+                app:title="Accept 3rd Party Cookies"
+                app:defaultValue="false"/>
+
+        <SwitchPreferenceCompat
                 app:key="formdata"
                 app:title="Save Form Data"
                 app:defaultValue="true"/>

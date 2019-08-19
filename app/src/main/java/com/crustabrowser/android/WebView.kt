@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
@@ -72,6 +71,12 @@ class WebView @JvmOverloads constructor(
         settings.apply {
             javaScriptEnabled = preferences.getBoolean("javascript", true)
             blockNetworkImage = !preferences.getBoolean("load_image", true)
+            useWideViewPort = preferences.getBoolean("viewport", true)
+            saveFormData = preferences.getBoolean("formdata", true)
+            setGeolocationEnabled(preferences.getBoolean("location", true))
         }
+
+        CookieManager.getInstance().setAcceptCookie(preferences.getBoolean("cookies", true))
+        CookieManager.getInstance().setAcceptThirdPartyCookies(this, preferences.getBoolean("3rd_party_cookies", false))
     }
 }
