@@ -73,10 +73,8 @@
 
         <EditTextPreference
                 app:key="useragent"
-                app:title="User Agent"
-                app:defaultValue="Crusta/2.0"
-                app:useSimpleSummaryProvider="true"
-                app:summary="%s" />
+                app:title="Custom User Agent"
+                app:defaultValue="" />
 
     </PreferenceCategory>
 

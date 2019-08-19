@@ -1,5 +1,5 @@
 <resources>
-    <!-- Reply Preference -->
+    <!-- SearchEngine Preference -->
     <string-array name="search_engine_entries">
         <item>Baidu</item>
         <item>DuckDuckGo</item>
@@ -7,7 +7,6 @@
         <item>Google</item>
         <item>Qwant</item>
         <item>Yandex</item>
-        <item>Custom URL</item>
     </string-array>
 
     <string-array name="search_engine_values">
@@ -17,6 +16,5 @@
         <item>google</item>
         <item>qwant</item>
         <item>yandex</item>
-        <item>custom</item>
     </string-array>
 </resources>

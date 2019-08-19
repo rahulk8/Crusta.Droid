@@ -68,11 +68,19 @@ class WebView @JvmOverloads constructor(
     @SuppressLint("SetJavaScriptEnabled")
     private fun initSettings() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val userAgentList = settings.userAgentString.split(" ").toMutableList()
+        userAgentList.add(userAgentList.size - 1, "Crusta/2.0")
+        val defaultUserAgent = userAgentList.joinToString (separator = " ") { it -> it }
+        var prefUserAgent = preferences.getString("useragent", defaultUserAgent)
+        if (prefUserAgent.isNullOrBlank()) prefUserAgent = defaultUserAgent
+
         settings.apply {
             javaScriptEnabled = preferences.getBoolean("javascript", true)
             blockNetworkImage = !preferences.getBoolean("load_image", true)
             useWideViewPort = preferences.getBoolean("viewport", true)
             saveFormData = preferences.getBoolean("formdata", true)
+            userAgentString = prefUserAgent
             setGeolocationEnabled(preferences.getBoolean("location", true))
         }
 
