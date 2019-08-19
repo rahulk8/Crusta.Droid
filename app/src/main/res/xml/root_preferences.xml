@@ -39,6 +39,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="Ad Block">
+
+        <SwitchPreferenceCompat
+            app:key="adblock"
+            app:title="Enable Ad-Block"
+            app:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="Privacy">
 
         <SwitchPreferenceCompat
@@ -54,11 +64,6 @@
         <SwitchPreferenceCompat
                 app:key="formdata"
                 app:title="Save Form Data"
-                app:defaultValue="true"/>
-
-        <SwitchPreferenceCompat
-                app:key="dnt"
-                app:title="Request 'Do Not Track'"
                 app:defaultValue="true"/>
 
         <EditTextPreference

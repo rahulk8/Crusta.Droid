@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.crustabrowser.android.adblock.Adblocker
 import com.crustabrowser.android.bookmarks.Bookmark
 import com.crustabrowser.android.bookmarks.BookmarkActivity
 import com.crustabrowser.android.history.HistoryActivity
@@ -30,7 +31,9 @@ class TabActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Database.initDb(this)
+        Adblocker.init()
         TabInfo.activity = this
 
         setContentView(R.layout.activity_tab)
