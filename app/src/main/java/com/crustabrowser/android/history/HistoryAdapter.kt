@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crustabrowser.android.Database
 import com.crustabrowser.android.R
+import com.crustabrowser.android.tabs.TabInfo
 import kotlinx.android.synthetic.main.view_sites_adapter.view.*
 import java.util.*
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     private var items = mutableListOf<History>()
+    lateinit var activity: HistoryActivity
 
     init {
         AsyncTask.execute {
@@ -37,9 +39,13 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
         holder.view.address.text = item.address
         holder.view.extra_info.text = Date(item.time).toLocaleString()
 
+        holder.view.setOnClickListener {
+            TabInfo.addTab(item.address)
+            activity.finish()
+        }
+
         holder.view.remove.setOnClickListener {
             val index = holder.adapterPosition
-            val item = items[index]
             AsyncTask.execute { Database.db?.historyDao()?.delete(item) }
             items.removeAt(index)
 

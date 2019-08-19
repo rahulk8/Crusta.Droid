@@ -53,8 +53,6 @@ class WebView @JvmOverloads constructor(
 
             Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()
         }
-
-        loadHome()
     }
 
     fun loadHome() {

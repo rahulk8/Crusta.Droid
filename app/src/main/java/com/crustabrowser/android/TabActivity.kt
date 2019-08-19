@@ -22,6 +22,7 @@ import com.crustabrowser.android.tabs.Tab
 import com.crustabrowser.android.tabs.TabInfo
 import com.crustabrowser.android.tabs.TabListActivity
 import kotlinx.android.synthetic.main.activity_tab.*
+import kotlinx.android.synthetic.main.view_tab.view.*
 import kotlinx.android.synthetic.main.view_tab_adapter.*
 
 class TabActivity : AppCompatActivity() {
@@ -79,6 +80,7 @@ class TabActivity : AppCompatActivity() {
 
     fun addTab() {
         val tab = Tab(this)
+        tab.web_view.loadHome()
         TabInfo.addTab(tab)
 
         refreshTabs()

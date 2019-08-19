@@ -20,6 +20,7 @@ class BookmarkActivity : AppCompatActivity() {
 
         val linearLayoutManager = LinearLayoutManager(this)
         val viewAdapter = BookmarkAdapter()
+        viewAdapter.activity = this
         recycler_view.apply {
             layoutManager = linearLayoutManager
             adapter = viewAdapter

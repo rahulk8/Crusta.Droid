@@ -13,7 +13,7 @@ import com.crustabrowser.android.R
 import kotlinx.android.synthetic.main.activity_history.*
 
 class HistoryActivity : AppCompatActivity() {
-    lateinit var viewAdapter: RecyclerView.Adapter<*>
+    lateinit var viewAdapter: HistoryAdapter
     lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +27,7 @@ class HistoryActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = HistoryAdapter()
+        viewAdapter.activity = this
         tab_recycler_view.apply {
             layoutManager = viewManager
             adapter = viewAdapter

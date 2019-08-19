@@ -15,6 +15,12 @@ object TabInfo {
 
     fun count() = if (mode == BrowserMode.Normal) normalTabs.size else incognitoTabs.size
 
+    fun addTab(address: String) {
+        val tab = Tab(activity)
+        tab.web_view.loadUrl(address)
+        addTab(tab)
+    }
+
     fun addTab(tab: Tab) {
         if (mode == BrowserMode.Normal) {
             currentIndex = normalTabs.size
