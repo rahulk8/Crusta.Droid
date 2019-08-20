@@ -49,6 +49,30 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            app:title="Proxy">
+
+        <SwitchPreferenceCompat
+                app:key="proxy"
+                app:title="Enable Proxy"
+                app:defaultValue="false" />
+
+        <EditTextPreference
+                app:key="proxy_host"
+                app:title="Host"
+                app:dependency="proxy"
+                app:useSimpleSummaryProvider="true"
+                app:summary="%s" />
+
+        <EditTextPreference
+                app:key="proxy_port"
+                app:title="Port"
+                app:dependency="proxy"
+                app:useSimpleSummaryProvider="true"
+                app:summary="%s" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="Privacy">
 
         <SwitchPreferenceCompat
