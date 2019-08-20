@@ -3,6 +3,7 @@ package com.crustabrowser.android
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.AsyncTask
+import android.util.Log
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse

@@ -34,7 +34,7 @@ class TabActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Database.initDb(this)
-        Adblocker.init()
+        Adblocker.init(this)
         TabInfo.activity = this
 
         setContentView(R.layout.activity_tab)
